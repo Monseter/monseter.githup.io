@@ -2,9 +2,10 @@
 title: HTML5
 date: 2021-01-27 17:57:26
 tags: HTML5
+updated: true
 categories: 前端
 ---
-## HTML5 建立的一些规则：
+## HTML5 建立的一些规则
 
 - 新特性应该基于 HTML、CSS、DOM、以及JavaScript
 - 减少对外部插件的需求（比如 Flash）
@@ -31,7 +32,8 @@ categories: 前端
 - 在IE9中，需要把这些元素转化为**块级元素**
 
 ## video标签
-大多数视频是通过插件（比如Flash）来显示的，然而并非所有的浏览器都拥有同样的插件。HTML5 规定来一种通过 video 元素来包含视频的标准方法。
+
+描述：大多数视频是通过插件（比如Flash）来显示的，然而并非所有的浏览器都拥有同样的插件。HTML5 规定来一种通过 video 元素来包含视频的标准方法。
 
 - 视频编码格式
 
@@ -47,25 +49,25 @@ MPEG4 = 带有 H.264 视频编码和 AAC 音频编码的 MPEG4 文件
 
 WebM = 带有 VP8 视频编码和 Vorbis 音频编码的 WebM 文件
 
-- 如何使用
+- **如何使用**
 
-```html
-<video src="movie.ogg" width="320" height="240" controls="controls">
-Your browser does not support the video tag.
-</video>
-```
+    ```html
+    <video src="movie.ogg" width="320" height="240" controls="controls">
+        Your browser does not support the video tag.
+    </video>
+    ```
 
 video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式：
 
-```html
-<video width="320" height="240" controls="controls">
-  <source src="movie.ogg" type="video/ogg">
-  <source src="movie.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-```
+    ```html
+    <video width="320" height="240" controls="controls">
+    <source src="movie.ogg" type="video/ogg">
+    <source src="movie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+    ```
 
-- video 标签的属性
+- **video 标签属性**
 
 |   属性   |    值    |                             描述                             |
 | :------: | :------: | :----------------------------------------------------------: |
@@ -81,11 +83,12 @@ Your browser does not support the video tag.
 
 - 基本使用
 
-html 中使用的标签一般加一个id,因为需要在js中操控这个标签来渲染不同的内容
-```html
-    <canvas id="canvas" style="border:1px sold #aaa;display:block;margin：50px auto">
-    浏览器不支持canvas,请更换浏览器</canvas>
-```
+    描述：html 中使用的标签一般加一个id,因为需要在js中操控这个标签来渲染不同的内容。
+
+    ```html
+        <canvas id="canvas" style="border:1px sold #aaa;display:block;margin：50px auto">
+        浏览器不支持canvas,请更换浏览器</canvas>
+    ```
 
 ```javascript
 var canvas = document.getelementById('canvas')
@@ -105,7 +108,7 @@ if(canvas.getContext('2d')) {
 说明：该操做判断是否能获取到上文环境，有则继续，无则提示
 ```
 
-### 总结：需要了解canvas 三个方法:
+**总结**：需要了解canvas 三个方法:
 - 基础使用
 
 ​	canvas.width  // 画布宽
@@ -122,7 +125,7 @@ context.lineTo(700,700) // 画笔终点位置
 // 前两行代码，可以这样理解为人的想象，但是还未执行
 context.stroke() //想好了是吧，那就开始下笔画了
 
-说明：canvas是基于我们所设的状态，然后调用函数去执行的，前两行代码为状态，后一行为调用函数执行操作绘制。这里坐标点（x,y）是基于画布左上角开始往右为正x轴，往下正y轴。
+描述：canvas是基于我们所设的状态，然后调用函数去执行的，前两行代码为状态，后一行为调用函数执行操作绘制。这里坐标点（x,y）是基于画布左上角开始往右为正x轴，往下正y轴。
 
 context对象再列举几个属性：
 context.lineWidth = 5 //画笔线宽
@@ -182,7 +185,7 @@ context.strokeStyle = "black"
 context.stroke()
 ```
 
-### 总结：需要记住context一些绘图方法
+**注**：需要记住context一些绘图方法
 
 ​		context.moveTo(x,y) // 起点
 
@@ -206,8 +209,7 @@ context.stroke()
 
 ​		context.closePath()  // 放在状态结束末尾lineTo
 
-### Draw an arc 绘制圆与圆弧
-
+- 绘制圆与圆弧
 ```javascript
 context.arc(
     //三个参数为圆心坐标x,y以及半径radius
@@ -218,7 +220,7 @@ context.arc(
     anticlockwise = false
 )
 ```
-说明下startingAngel与endingAngle:上图可知是从最右边0pi 开始，然后顺时针 0.5pi --> 1pi -->1.5pi --> 2pi 回到原点。需要注意的是，不管是顺时针还是逆时针这四个位置（0pi,0.5pi,1pi,1.5pi）永远不会变的
+描述：startingAngel与endingAngle:上图可知是从最右边0pi 开始，然后顺时针 0.5pi --> 1pi -->1.5pi --> 2pi 回到原点。需要注意的是，不管是顺时针还是逆时针这四个位置（0pi,0.5pi,1pi,1.5pi）永远不会变的
 
 例1
 
@@ -238,39 +240,39 @@ for(let i = 0; i < 10; i++) {
 补充下：closePath()会闭合图形，只要加这函数将会自动闭合，当然也可以分开用，不一定非要beginPath 与 closePath 一起运用
 ```
 
-##### 时钟demo
+- **时钟demo**
 
-（1）点阵算法
+    （1）点阵算法
 
-说明：如上图，一个数字是由7*10组成的点阵，所以一个数字的宽度就是7*（2R+1）
+        描述：一个数字是由7*10组成的点阵，所以一个数字的宽度就是7*（2R+1）
 
-（2）Animation 动画效果
+    （2）Animation 动画效果
 
-canvas使用的是计时器来进行动画效果，基本架构，三个参数，一个匿名函数
+        canvas使用的是计时器来进行动画效果，基本架构，三个参数，一个匿名函数
 
-```javascript
-setInterval(
-    fuction() {
-    	render() // 一般作为绘制
-		update() // 数据调整
-    }，
+    ```javascript
+        setInterval(
+            fuction() {
+    	        render() // 一般作为绘制
+		        update() // 数据调整
+        }，
     50 //间隔50毫秒，每一帧所要做的事
-)
+    )
 
-这时绘制图形时候，需要引入新的函数，clearRect()清楚下画布内容，避免叠加
-```
+    描述：这时绘制图形时候，需要引入新的函数，clearRect()清楚下画布内容，避免叠加
+    ```
 
-（3）屏幕自适应
+    （3）屏幕自适应
 
-```javascript
-body样式需要撑起来以及canvas标签 需要设置高度100%
-<body style="height: 100%;">
-  <canvas id="canvas" style="height: 100%;">
-    当前浏览器支持canvas，请更换浏览器后再试</canvas>
-</body>
-```
+    body样式需要撑起来以及canvas标签 需要设置高度100%
+    ```html
+        <body style="height: 100%;">
+        <canvas id="canvas" style="height: 100%;">
+            当前浏览器支持canvas，请更换浏览器后再试</canvas>
+        </body>
+    ```
 
-#### a 标签
+## a 标签详解
 
 | HTML5属性 |      值       |                  描述                   |
 | :-------: | :-----------: | :-------------------------------------: |
@@ -278,22 +280,24 @@ body样式需要撑起来以及canvas标签 需要设置高度100%
 |   media   | *media_query* | 规定被链接文档是为何种媒介/设备优化的。 |
 |   type    |  *MIME type*  |     规定被链接文档的的 MIME 类型。      |
 
-## 图片下载
-描述：通过创建 `a` 标签，绑定`download`属性，最后事件处理达到下载效果。
+- **图片下载**
 
-```javascript
-// 下载
-handleDownload(item) {
-    let downloadLink = document.createElement('a');
-    downloadLink.href = item;
-    downloadLink.download = item;
-    downloadLink.click();
-    if (document.body.contains(downloadLink)) {  // BUG 存在即删除该节点
-        document.body.removeChild(downloadLink);
+    描述：通过创建 `a` 标签，绑定`download`属性，最后事件处理达到下载效果。
+
+    ```javascript
+    // 下载
+    handleDownload(item) {
+        let downloadLink = document.createElement('a');
+        downloadLink.href = item;
+        downloadLink.download = item;
+        downloadLink.click();
+        if (document.body.contains(downloadLink)) {  // BUG 存在即删除该节点
+            document.body.removeChild(downloadLink);
+        }
+        this.$nextTick(() => {
+            this.$Message.success('下载成功！')
+        })
     }
-    this.$nextTick(() => {
-        this.$Message.success('下载成功！')
-    })
-}
-```
+    ```
+
 

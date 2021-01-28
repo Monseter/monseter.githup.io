@@ -7,16 +7,16 @@ GitHubRepositories: Hexo-LiveForCode
 
 # ---- 基础信息配置 ----
 # 博主名称, 文章后缀和主页图片上都会使用此名称
-BlogUser: Live For Code
+BlogUser: 清欢的博客
 # 用户头像URL
-BlogAvatar: https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/sidebar/avatar.jpg
+BlogAvatar: https://blog-qinghuan.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210128100226.jpg
 # 创建时间
 BlogStartDate: "2020-01-01"
 
 
 # ---- 网站配置 ----
 # 当前页失去焦点, 页面Title显示文字
-WebsiteTitleBlur: (◍´꒳`◍) Hi, Live For Code
+WebsiteTitleBlur: (◍´꒳`◍) Hi, 小主
 # 当前页失去焦点, 页面Title变化, 延时时间, 单位毫秒
 WebsiteTitleBlurTimeOut: 500
 # 当前页获取焦点, 页面Title显示文字, 显示后延时恢复原Title
@@ -115,6 +115,10 @@ BackAnimation:
 HomeHeaderImage: 
   - https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/home.jpg
   - https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/home.jpeg
+  - https://blog-qinghuan.oss-cn-beijing.aliyuncs.com/bg.jpg
+  - https://blog-qinghuan.oss-cn-beijing.aliyuncs.com/6dd81def721e4125a337ca89efaa3849.jpg
+  - https://blog-qinghuan.oss-cn-beijing.aliyuncs.com/ccd6fce7874f4f9351ddf67c71ed4536.jpg
+  - https://blog-qinghuan.oss-cn-beijing.aliyuncs.com/1871233011c1435935405e4f52f53ba1.jpg
 # 主页头图上的标语, 设置此选项会固定显示文字, 默认为空, 自动获取一句
 HomeBannerText: ""
 
@@ -123,7 +127,6 @@ HomeBannerText: ""
 # 文章详情页图片URL, 支持多张, 每次刷新随机设置一张
 ArticleHeaderImage: 
   - https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/article.jpg
-
 
 # ---- 其他页面配置 ----
 # 其他页面头图上的标语, 设置此选项会固定显示文字, 默认为空, 自动获取一句
@@ -143,9 +146,9 @@ MenuList:
   - 
     name: 分类
     href: /category
-  -
-    name: 归档
-    href: /archive
+  # -
+  #   name: 归档
+  #   href: /archive
   -
     name: 赞赏
     href: /donate
@@ -207,7 +210,7 @@ ConsoleList:
     - BNDong
   -
     - "Theme:"
-    - LiveForCode
+    - 清欢
 
 
 # ---- 字体图标扩展 ----
@@ -409,5 +412,5 @@ Suffix:
 
 # ---- 主题信息配置 ----
 Theme: 
-  url: https://github.com/first19326/Hexo-LiveForCode
-  name: Hexo - Live For Code
+  url: ''
+  name: Live For Code
