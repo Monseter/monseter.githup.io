@@ -1,5 +1,5 @@
 ---
-title: AJAX
+title: AJAX封装
 date: 2021-01-28 10:39:01
 tags: Ajax
 categories: JavaScript

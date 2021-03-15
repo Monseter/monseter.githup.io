@@ -85,8 +85,61 @@ git reflog
 例： 6141b4a HEAD@{1}: merge base: Merge made by the 'recursive' strategy.
 git reset 6141b4a
 
-注意：回退该版本不会清空暂存区，需要从新提交，最好看下暂存区，一般回退是你提交的上一个版本
+注意：回退该版本不会清空暂存区，需要从新提交，最好看下暂存区，回退是你提交的上一个版本
 ```
+
+## git SSH 配置 githup 和 gitee (码云)
+
+- 清除已有的 git 配置
+
+  如果你之前已经安装了git，并且也配置过了全局的`user.name`和`user.email`，那么现在就应该讲这些配置全部清除，清除方法如下：
+
+  ```
+  git config --global --unset user.name "YourName"
+  git config --global --unset user.email "YourEmail"
+  ```
+
+- 生成新的 SSH Keys
+
+  1. githup 秘钥
+
+     进入`~/.ssh`目录下，输入命令，直接两次回车即可。会在文件夹下生成`github_id_rsa`和`github_id_rsa.pub`。
+
+     ```
+     ssh-keygen -t rsa -C "YourGIthubEmail@mail.com" -f "github_id_rsa"
+     ```
+
+     之后运行命令`cat github_id_rsa.pub`输出文件公钥内容，复制公钥内容并添加到github的SSH Keys中保存。
+
+  2. gitee 秘钥
+
+     与github生成密钥的操作类似
+
+     ```
+     ssh-keygen -t rsa -C "YourGiteeEmail@mail.com" -f "gitee_id_rsa"
+     ```
+
+     复制公钥`gitee_id_rsa.pub`公钥的内容，并添加到gitee的SSH Keys中保存。
+
+- 创建 config 文件避免 ssh 冲突
+
+  在`~/.ssh`文件夹下新建`config`文件，添加以下内容
+
+  ```
+  # gitee
+  
+  Host gitee.com
+  HostName gitee.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/gitee_id_rsa
+  
+  # github
+  
+  Host github.com
+  HostName github.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/github_id_rsa
+  ```
 
 
 

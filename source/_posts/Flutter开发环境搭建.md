@@ -33,7 +33,7 @@ Java 环境下载https://www.oracle.com/java/technologies/javase-jdk8-downloads.
 
 ## Flutter SDK 的安装
 
-下载地址：htttps://flutter.io/sdk-archive/#windows
+下载地址：https://flutter.io/sdk-archive/#windows
 
 配置环境变量
 

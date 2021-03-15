@@ -67,7 +67,11 @@ install with cmd.exe
 
 ### 方法二：直接将代码jdk下载下来随后添加系统环境变量即可。
 
+### 方法三：官网下载安装程序，下载下来后直接安装即可
+
 最后检测下，是否安装成功
+
+Dart -V
 
 网上代码托管地址：https://gitee.com/LeiYu-Io/Dart-Basic
 

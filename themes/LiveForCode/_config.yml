@@ -193,9 +193,9 @@ BottomText:
   # 图标  
   icon: like-fill
   # 图标左侧文字
-  left: 人生若只如初见
+  left: 你有你的清欢渡
   # 图标右侧文字
-  right: 何事秋风悲画扇  
+  right: 我有我的不归路 
 # 是否显示主题信息
 ThemeInfo: true 
 
