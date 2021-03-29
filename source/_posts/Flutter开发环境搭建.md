@@ -103,15 +103,75 @@ fultter doctor 命令使用
 
 finish 等待几分钟
 
-**步骤二：**最后生成项目的时候需要从新导入
+## gradle 安装
+
+**方法一离线安装：**该方法需要手动下载对应的 `Android Studio` 对应的 `gradle` 版本号
+
+gradle 下载地址: https://services.gradle.org/distributions/
+
+1. 上述地址中下载需要的Gradle文件，保存在规范路径（不解压 ）。
+2. 打开Android studio工程；
+3. 切换到 Android 视图；
+4. 找到 Gradle Scripts ；
+5. 找到gradle-wrapper.properties ；（gradle-wrapper.properties文件是专门管理gradle 的配置文件）
+6. 将distributionUrl 改为第1步中Gradle文件的路径；
+7. 同步或重新打开工程，离线配置gradle完成。
+
+示例如下：
+
+*distributionUrl=file:///D:/Android/gradle/gradle-3.3-all.zip*
+
+```
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+distributionUrl=file:///D:/Android/gradle/gradle-3.3-all.zip
+```
+
+> 建议使用此离线下载方法，在线下载比较慢而且容易出问题。
+
+**方法二在线安装：**更改 android 下 build.gradle 配置镜像 不然下载特慢
+
+```
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        kotlin_version = '1.3.72'
+    }
+    repositories {
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{url "https://jitpack.io"}
+        google()
+//        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        google()
+//        jcenter()
+    }
+}
+```
+
+然后，重新将项目根目录中的 android  导入 Android Studio 即可。最后，点击 `File > Sync Project with Gradle Files `
 
   点击android,在当前窗口打开
 
-##### 注意：第一次打开会有种卡死状态，其实是在下载Grade Files 文件，大概十几分钟看网速！
+> 注意：第一次打开会有种卡死状态，其实是在下载Grade Files 文件，大概十几分钟看网速！
 
 **易出错！！！**
 
-可以看这个目录下，文件大小是否在变，在变就说明正常，如果没变有可能安装失败！
+可以看 系统用户 .gradle/wraper/dist 目录下，文件大小是否在变，在变就说明正常，如果没变有可能安装失败！
 
 如果出错：解决方法见下图
 

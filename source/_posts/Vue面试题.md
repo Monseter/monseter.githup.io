@@ -12,7 +12,9 @@ MVVM 是 Model-View-ViewModel 缩写，也就是把 MVC 中的 Controller 演变
 
 ## 2、简单说一下 Vue2.x 响应式数据原理
 
-Vue 在初始化数据时，会使用 Object.defineProperty 重新定义 data 中的所有属性，当页面使用对应的属性时，首先会进行依赖收集（收集当前组件的 watcher 观察者）如果属性发生变化会通知相关依赖进行更新操作（发布订阅）。
+**level1:** vue2.0中，响应式实现的核心就是 ES5的Object.defineProperty(obj, prop, descriptor). 通过Object.defineProperty()劫持data和props各个属性的getter和setter，getter做依赖收集，setter派发更新。整体来说是一个 数据劫持 + 发布-订阅者模式。
+
+**level2:** 具体来说， ① vue初始化阶段(beforeCreate之后created之前)，遍历data/props，调用Object.defineProperty给每个属性加上getter、setter。② 每个组件、computed 都会实例化一个 watcher（当然也包括每个自定义watcher），订阅渲染/计算所用到的所用data/props/computed，一旦数据发生变化，setter 被调用，会通知渲染 watcher 重新计算、更新组件。
 
 ## 3、知道 Vue3.x 响应式数据原理么？
 
@@ -116,7 +118,7 @@ Virtual DOM 映射到真实 DOM 要经历 VNode 的 create、diff、patch等阶�
 
 ## 13、Vue2.x 组件通信有哪些方式
 
-**父子组件通信**
+### **父子组件通信**
 
 父 -> 子 props，子 -> 父 $on、$emit
 
@@ -124,11 +126,71 @@ Virtual DOM 映射到真实 DOM 要经历 VNode 的 create、diff、patch等阶�
 
 ref 获取实例的方式调用组件的属性或者方法
 
-**兄弟组件通信**
+### **兄弟组件通信**
 
 Event Bus 实现跨组件通信 Vue.prototype.$bus = new Vue
 
-Vuex
+### **Vuex运行机制**
+
+Vuex 的 state 作为一个仓库，提供数据驱动 vue component渲染。视图通过 dispach 派发 actions，actions中可以做一些异步操作。actions 或者视图通过 commit 提交给 mutations，mutation 去改变state。
+
+**level1:** 源码分析：vuex其实是一个Vue.js插件，插件都需要提供一个install方法，install方法调用会将Vue作为参数传入。Vue.user(plugin)安装插件，也就是执行插件的install方法。会在全局混入一个 **beforeCreate** 钩子函数，把示例化的 Store 保存到所有组件的 **this.$store **中。
+**level2: mutation改变state, 会触发视图改变的原因？通过vue实现的，[实例化vue，把state作为一个data属性。]** ↔️ **核心**
+
+```javascript
+let Vue
+function install(_Vue) {
+  Vue = _Vue
+  function vuexInit() {
+    const options = this.$options
+    console.log('vuexInit -> this.$options', this.$options)
+    if (options.store) {
+			// // 根实例 this --> Vue
+      this.$store =
+        typeof options.store === 'function' ? options.store() : options.store
+    } else if (options.parent && options.parent.$store) {
+			// 组件实例 this --> VueComponent, 如 APP, Home, About...
+      this.$store = options.parent.$store
+    }
+  }
+  Vue.mixin({ beforeCreate: vuexInit })
+}
+
+class Store {
+  constructor(options = {}) {
+    const { state = {}, mutations = {}, getters = {} } = options
+    this._mutations = mutations
+    // getter实现原理
+    const computed = {}
+    this.getters = {}
+    for (let [key, fn] of Object.entries(getters)) {
+      computed[key] = () => fn(this.state)
+      Object.defineProperty(this.getters, key, {
+        get: () => this._vm[key]
+      })
+    }
+    this._vm = new Vue({
+      data: { $$state: state }, // 核心原理
+      computed
+    })
+  }
+
+  commit(type, payload) {
+    if (this._mutations[type]) {
+      this._mutations[type](this.state, payload)
+    }
+  }
+
+  get state() {
+    return this._vm._data.$$state
+  }
+}
+
+export default { Store, install }
+
+```
+
+
 
 ## 14、SSR 了解么
 
@@ -170,4 +232,46 @@ SSR 有着更好的 SEO、并且首屏加载速度更快等有点。不过也有
 location.hash 的值实际就是 URL 中 # 后面的东西。
 
 history 实际采用了 HTML5 中提供的 API 来实现，主要有 history.pushState() 和 history.replaceState()。
+
+## 17、Vue 与 React 区别
+
+### 相同点
+
+1. 使用virtural DOM + Diff算法。
+2. 组件化思想。
+
+### 不同点
+
+模板语法的不同：react通过JSX渲染模板，vue通过拓展的html语法进行渲染。比如react中插值、条件、循环都通过JS语法实现，vue是通过指令v-bind、v-if、v-for实现的。
+监听数据变化原理不同：vue通过getter、setter劫持通知数据变化，react通过比较引用的方式进行。vue使用的响应式数据，而react是不可变数据。vue改变数据直接赋值，react需要调用setState方法（用新的state替换旧的state）。
+
+## 18、loader、plugin、tree shaking
+
+### **loader**
+
+对模块的源代码进行转换，将不同的语言转换为JS，或将内联图像转换为data url。如：文件，url-loader、file-loader。转换编译，babel-loader、ts-loader。模板，html-loader。样式，style-loader、css-loader、less-loader。清理，eslint-loader。框架，vue-loader。
+
+### plugin
+
+解决loader无法实现的其他事儿。比如 HtmlWebpackPlugin、CleanWebpackPlugin、webpack-bundle-analyzer、DllPlugin、HotModuleReplacementPlugin。
+
+### **tree shaking**
+
+消除无用的js代码（剔除模块中没有导出或引用的部分）。仅支持ES Module静态引入方式，不支持require运行时动态引入方式。
+
+ES6模块引入是静态分析的，故而可在编译时正确判断加载哪些代码。
+
+可剔除的内容有限。webpack配合uglifyJS打包文件，只能shaking部分代码，像模块代码存在副作用，立即执行函数等都不能shaking。uglifyJS不进行程序流分析，只简单判断变量后续是否被引用、修改，不去排除有可能有副作用的代码。（rollup会）还有，比如项目中router.js引用了页面组件，但是在路由渲染中没有用到，也无法shaking掉。
+
+## 18、懒加载路由
+
+vue-router实现原理
+
+**level1**:
+
+1. 将需要懒加载的子模块，打包成单独的文件。ES6的import()。
+2. hashChange时，根据hash变化执行特定的函数，加载子模块。
+3.  实现的三种方式，location.hash + hashChange()，HTML5规范的pushState(IE10) + popState事件监听，abstract nodejs默认值。
+
+**level2：**源码分析。路由安装，利用mixin给每个组件注入beforeCreated和destory钩子函数，在Vue原型上定义route 和 router，并进行响应式处理，定义全局的 roter-link 和 router-view 组件。根据路由配置创建映射关系。根据传入路径计算出新的路径，在路路径切换过程中，执行一系列的导航守卫函数，更改 Url，渲染对应组件。
 
