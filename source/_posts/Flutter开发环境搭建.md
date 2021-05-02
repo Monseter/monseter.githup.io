@@ -87,9 +87,27 @@ fultter doctor 命令使用
 
 ###  AVD 虚拟机的建立
 
+AVD 是通过 AS 建立的，方便在手机上调试而不用去下载其他模拟器或者使用真机连接调试。
 
+点击 AS 菜单栏 AVD 进行选择，如果没有那么根据自己所需进行选择，Android 版本不同以及它的操作系统。操作系统需要安装，根据提示直接 Install  就可以了。
 
+AVD 虚拟机创建后我们就可以直接点击启动看看效果。大多数情况下我们使用 VS code 开发，那么开虚拟机只能通过开 AS 才能开启 AVD，我们可以建个配置文件一键启动我们的 AVD。
 
+需要知道，我们的 AVD 路径一般在 用户盘  `.android\avd`
+
+.bat 文件内容如下：
+
+```
+...\AppData\Local\Android\Sdk\emulator\emulator.exe -netdelay none -netspeed full -avd Pixel_2_API_30
+```
+
+`...\AppData\Local\Android\Sdk\emulator\emulator.exe` 为 emulator.exe 路径
+
+`-netdelay none -netspeed full ` 启动配置项
+
+`-avd Pixel_2_API_30`  对应的是我们 AVD 名称
+
+最后，双击 bat 文件就能看到 cmd  启动窗口，以及 AVD 手机模拟器。
 
 ## 新建一个Flutter 项目
 
