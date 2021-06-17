@@ -150,22 +150,22 @@ MenuList:
   #   name: 归档
   #   href: /archive
   -
-    name: 赞赏
-    href: /donate
+    name: 作品
+    href: /projects
   -
-    name: 关于
+    name: 关于我
     href: /about
-  -
-    name: 订阅
-    href: /atom.xml
-    target: _blank
+  # -
+  #   name: 订阅
+  #   href: /atom.xml
+  #   target: _blank
   -
     name: 搜索
     href: ""
     class: search
-  -
-    name: 留言板
-    href: /comment
+  # -
+    # name: 留言板
+    # href: /comment
   #-
   #  name: 友情链接
   # href: /friend
