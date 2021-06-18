@@ -151,7 +151,7 @@ MenuList:
   #   href: /archive
   -
     name: 作品
-    href: /projects
+    href: /project
   -
     name: 关于我
     href: /about
